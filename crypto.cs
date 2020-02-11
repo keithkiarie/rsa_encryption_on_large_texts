@@ -150,9 +150,20 @@ class Program
             //get public key from file
             rsa.ImportParameters(StringToKey(File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\pubKey.xml")));
 
-            encrypted = rsa.Encrypt(input, true);
+            try
+            {
+                encrypted = rsa.Encrypt(input, true);
+                return encrypted;
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine(e);
+                byte[] empty = {};
+                return empty;
+            }
+
         }
-        return encrypted;
+        
     }
 
     static byte[] Decrypt(byte[] input)
@@ -165,9 +176,20 @@ class Program
             //get private key from file
             rsa.ImportParameters(StringToKey(File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\priKey.xml")));
 
-            decrypted = rsa.Decrypt(input, true);
+            try
+            {
+                decrypted = rsa.Decrypt(input, true);
+                return decrypted;
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine(e);
+                byte[] empty = {};
+                return empty;
+            }
+            
         }
-        return decrypted;
+        
     }
 
     //converting the public key into a string representation
